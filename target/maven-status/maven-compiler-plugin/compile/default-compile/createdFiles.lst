@@ -1,5 +1,12 @@
-com\twitter\kafka\TwitterProducer$1.class
 com\twitter\kafka\TwitterProducer$3.class
 com\twitter\kafka\TwitterProducer$2.class
+com\twitter\kafka\controller\KafkaController.class
+com\twitter\kafka\WebSocketConfig.class
+com\twitter\kafka\Application.class
+com\twitter\kafka\KafkaStreamConfig.class
+com\twitter\kafka\services\Producer$1.class
 com\twitter\kafka\TwitterProducer$1$1.class
+com\twitter\kafka\services\Producer.class
+com\twitter\kafka\TwitterProducer$1.class
+com\twitter\kafka\KafkaTopicConfig.class
 com\twitter\kafka\TwitterProducer.class

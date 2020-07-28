@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: kafka-twitter
+Implementation-Version: 1.0-SNAPSHOT
+Built-By: mk7098
+Implementation-Vendor-Id: com.ale.ngov.test
+Build-Jdk: 1.8.0_201
+Implementation-URL: http://projects.spring.io/spring-boot/kafka-twitte
+ r/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
