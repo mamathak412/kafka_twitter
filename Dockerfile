@@ -1,5 +1,7 @@
-FROM java:8
-WORKDIR /
-ADD target/kafka-twitter-1.0-SNAPSHOT.jar kafka-twitter-1.0-SNAPSHOT.jar
-EXPOSE 8082
-CMD java -cp kafka-twitter-1.0-SNAPSHOT.jar com.twitter.kafka.Application
+FROM openjdk:8-jre-alpine
+
+RUN mkdir /app
+
+COPY target/BookStore-1.0-SNAPSHOT.jar /app/app.jar
+
+CMD java -jar /app/app.jar
