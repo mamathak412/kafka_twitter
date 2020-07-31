@@ -19,7 +19,7 @@ import twitter4j.conf.ConfigurationBuilder;
 public class Producer {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Producer.class);
-	private static final String TOPIC = "users";
+	private static final String TOPIC = "twitter";
 	private String[] filters = {"devops,cicd,jenkins,docker,kubernetes"};
 	private String consumerKey = "R3fPqwzoSoEeNyehNqlxzAEnm";
 	private String consumerSecret = "YzbiLmyUKtQL4bsKhfYVR4nYXqT0RkTp0NPM4IQjeKzk9Qn4rQ";
