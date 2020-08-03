@@ -29,7 +29,7 @@ public class Producer {
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
 
-	public void sendMessage(String message) {
+	public void sendMessage() {
 		//logger.info(String.format("$$ -> Producing message --> %s", message));
 		configureTwitterStream(this.kafkaTemplate);
 		//this.kafkaTemplate.send(TOPIC, message);
