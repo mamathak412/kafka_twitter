@@ -1,8 +1,12 @@
 package com.twitter.kafka.services;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +29,17 @@ public class Producer {
 	private String consumerSecret = "YzbiLmyUKtQL4bsKhfYVR4nYXqT0RkTp0NPM4IQjeKzk9Qn4rQ";
 	private String token = "1231845131549986816-LCuyythvWqdQrzJUX4Vx8OFLGA2rTV";
 	private String secret = "a9LKZeZbRLOWzmYu5WVVSdYVhfDvP5Ri6cKdY3bDLWqvd";
-
-	@Autowired
-	private KafkaTemplate<String, String> kafkaTemplate;
+	
+	private final KafkaTemplate<String, Object> kafkaTemplate;
+	
+	private final String topicName = "twitter";
+    private final int messagesPerRequest = 10;
+    private CountDownLatch latch;
+    
+    public Producer(
+            final KafkaTemplate<String, Object> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
 	public void sendMessage() {
 		//logger.info(String.format("$$ -> Producing message --> %s", message));
@@ -35,7 +47,7 @@ public class Producer {
 		//this.kafkaTemplate.send(TOPIC, message);
 	}
 	
-	public void configureTwitterStream(KafkaTemplate<String, String> producer) {
+	public void configureTwitterStream(KafkaTemplate<String, Object> producer) {
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
 		configurationBuilder.setOAuthConsumerKey(consumerKey).setOAuthConsumerSecret(consumerSecret)
 				.setOAuthAccessToken(token).setOAuthAccessTokenSecret(secret);
@@ -46,16 +58,18 @@ public class Producer {
 			public void onStatus(Status status) {
 				String statusText = status.getText().toLowerCase();
 				producer.send(TOPIC, statusText);
-				/*producer.sendMessage(new ProducerRecord<>("first_topic", null, statusText), new Callback() {
-					
-					public void onCompletion(RecordMetadata recordMetadata, Exception e) {
-						if(e != null) {
-							logger.error("Something went wrong" ,e);
-						}
-					}
-				});*/
+				latch = new CountDownLatch(messagesPerRequest);
+		        IntStream.range(0, messagesPerRequest)
+		                .forEach(i -> producer.send(topicName, i,
+		                		statusText, i));
+		        try {
+					latch.await(60, TimeUnit.SECONDS);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-
+			
 			@Override
 			public void onException(Exception ex) {
 				ex.printStackTrace();
