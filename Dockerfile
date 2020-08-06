@@ -1,18 +1,8 @@
-FROM gliderlabs/alpine:3.3
+FROM openjdk:8-jre-alpine
 
 RUN mkdir /app
 
-RUN apk-install bash openjdk8 ca-certificates && \
-  find /usr/share/ca-certificates/mozilla/ -name *.crt -exec keytool -import -trustcacerts \
-  -keystore /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/cacerts -storepass changeit -noprompt \
-  -file {} -alias {} \; && \
-  keytool -list -keystore /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/cacerts --storepass changeit
-
-# Expose reference to JAVA_HOME
-ENV JAVA_HOME /usr/lib/jvm/java-1.8-openjdk
-
-# Adjust PATH to include all JDK related executables
-ENV PATH $JAVA_HOME/bin:$PATH
+COPY ./cacerts /usr/lib/jvm/java-1.8-openjdk/jre/lib/security
 
 COPY target/kafka-twitter-1.0-SNAPSHOT.jar /app/app.jar
 
