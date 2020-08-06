@@ -4,6 +4,8 @@ RUN mkdir /app
 
 COPY ./cacerts /usr/lib/jvm/java-1.8-openjdk/jre/lib/security
 
+RUN /usr/lib/jvm/java-1.8-openjdk/bin/keytool -import -alias ALEInternationalCertificate -file ./ALE-ROOT-CERTIFICATE.cer -keystore /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/cacerts -storepass changeit
+
 COPY target/kafka-twitter-1.0-SNAPSHOT.jar /app/app.jar
 
 CMD java -jar /app/app.jar

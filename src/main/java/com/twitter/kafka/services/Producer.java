@@ -50,7 +50,7 @@ public class Producer {
 	public void configureTwitterStream(KafkaTemplate<String, Object> producer) {
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
 		configurationBuilder.setOAuthConsumerKey(consumerKey).setOAuthConsumerSecret(consumerSecret)
-				.setOAuthAccessToken(token).setOAuthAccessTokenSecret(secret).setDebugEnabled(true);
+				.setOAuthAccessToken(token).setOAuthAccessTokenSecret(secret);
 
 		TwitterStream twitterStream = new TwitterStreamFactory(configurationBuilder.build()).getInstance();
 
