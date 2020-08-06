@@ -4,9 +4,7 @@ RUN mkdir /app
 
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
-RUN cd /home/ov
-
-COPY ALE-ROOT-CERTIFICATE.cer /usr/local/share/ca-certificates/mycert.crt
+COPY ./ALE-ROOT-CERTIFICATE.cer /usr/local/share/ca-certificates/mycert.crt
 
 RUN update-ca-certificates
 
