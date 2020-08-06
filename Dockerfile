@@ -1,10 +1,18 @@
-FROM openjdk:8-jre-alpine
+FROM gliderlabs/alpine:3.2
 
 RUN mkdir /app
 
-RUN pwd
+RUN apk-install bash openjdk7 ca-certificates && \
+  find /usr/share/ca-certificates/mozilla/ -name *.crt -exec keytool -import -trustcacerts \
+  -keystore /usr/lib/jvm/java-1.7-openjdk/jre/lib/security/cacerts -storepass changeit -noprompt \
+  -file {} -alias {} \; && \
+  keytool -list -keystore /usr/lib/jvm/java-1.7-openjdk/jre/lib/security/cacerts --storepass changeit
 
-RUN /usr/lib/jvm/java-1.8-openjdk/bin/keytool -import -alias ALEInternationalCertificate -file ALE-ROOT-CERTIFICATE.cer -keystore /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/cacerts -storepass changeit
+# Expose reference to JAVA_HOME
+ENV JAVA_HOME /usr/lib/jvm/java-1.7-openjdk
+
+# Adjust PATH to include all JDK related executables
+ENV PATH $JAVA_HOME/bin:$PATH
 
 RUN update-ca-certificates --fresh
 
