@@ -2,7 +2,7 @@ FROM gliderlabs/alpine:3.2
 
 RUN mkdir /app
 
-RUN apk-install bash openjdk7 ca-certificates && \
+RUN apk-install bash openjdk8 ca-certificates && \
   find /usr/share/ca-certificates/mozilla/ -name *.crt -exec keytool -import -trustcacerts \
   -keystore /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/cacerts -storepass changeit -noprompt \
   -file {} -alias {} \; && \
