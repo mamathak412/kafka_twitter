@@ -14,14 +14,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import com.fasterxml.jackson.databind.JsonSerializer;
 
 
 @SpringBootApplication
 public class Application {
 
 	public static void main(String[] args) {
+		System.setProperty("javax.net.ssl.trustStore", "C:\\Program Files\\Java\\jdk1.8.0_201\\jre\\lib\\security\\jssecacerts");
+		System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
 		SpringApplication.run(Application.class, args);
 	}
 
