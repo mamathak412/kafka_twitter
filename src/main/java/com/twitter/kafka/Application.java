@@ -22,8 +22,6 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 public class Application {
 
 	public static void main(String[] args) {
-		System.setProperty("javax.net.ssl.trustStore", "C:\\Program Files\\Java\\jdk1.8.0_201\\jre\\lib\\security\\jssecacerts");
-		System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
 		SpringApplication.run(Application.class, args);
 	}
 
